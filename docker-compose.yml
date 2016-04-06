@@ -1,0 +1,22 @@
+version: '2'
+services:
+  odoo:
+    image: odoo
+    container_name: odoo
+    ports:
+      - "8069:8069"
+    volumes:
+      - "/var/local/odoo:/var/lib/odoo"
+    links:
+      - database
+    depends_on:
+      - database
+    tty: true
+  database:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - "/var/local/postgresql/data:/var/lib/postgresql/data"
